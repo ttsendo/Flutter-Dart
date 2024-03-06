@@ -3,7 +3,7 @@ import 'package:flutter_stakes/screens/menu_screen.dart';
 
 void main(){
   runApp(const MainApp());
-}
+} 
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key});

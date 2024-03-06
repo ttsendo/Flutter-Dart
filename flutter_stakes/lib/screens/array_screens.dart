@@ -1,32 +1,31 @@
 import 'package:flutter/material.dart';
 
-class ScreenArray extends StatefulWidget {
+class ScreenArray extends StatefulWidget{
   const ScreenArray({super.key});
 
   @override
-  State<ScreenArray> createState() => _ScreenArrayState();
+  State<ScreenArray>createState()=>_ScreenArrayState();
 }
+final List<String>aprendices=["andres","feli","luz","sebas"];
+int numeroAprendices=0;
 
-final List<String> aprendices  = ["brandon", "jhaon", "danna", "andres", "sara"];
-int numeroAprendices =0;
-class _ScreenArrayState extends State<ScreenArray> {
+class _ScreenArrayState extends State<ScreenArray>{
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Recorrido array"),
+        title:const Text("recorrido el array"),
       ),
-      body: ListView.builder(
-        itemCount: aprendices.length,
-        itemBuilder: (BuildContext context, index){
-          numeroAprendices++;
-          return ListTile( 
-            leading: const Icon(Icons.person_2_outlined, color: Colors.blue,),
-            title: Text(aprendices[index]),
-            subtitle: Text("Aprendiz: $numeroAprendices"),
-          );
-        }
-      ),
+      body:ListView.builder(itemCount: aprendices.length, itemBuilder:(BuildContext context,index){
+        numeroAprendices++;
+        return ListTile(
+          leading: const Icon(Icons.person_2_outlined,color: Colors.blue,),
+          title: Text(aprendices[index]),
+          subtitle: Text("Aprendicez: $numeroAprendices"),
+        );
+
+
+      }),
     );
   }
 }

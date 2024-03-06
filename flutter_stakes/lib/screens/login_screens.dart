@@ -1,24 +1,22 @@
+import 'package:flutter/material.dart';
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-
-
-class clientes extends StatefulWidget {
-  const clientes({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<clientes> createState() => _clientesState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _clientesState extends State<clientes> {
-  void add (){
+class _LoginScreenState extends State<LoginScreen> {
+  void acceder(){
 
   }
   @override
   Widget build(BuildContext context) {
-        return Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        title: const Text("Agregar una Venta",style: TextStyle(color: Colors.black, fontSize: 30),),
+        title: const Text("login",style: TextStyle(color: Colors.black, fontSize: 30),),
         backgroundColor: Colors.tealAccent,
       ),
       body:  Padding(
@@ -28,10 +26,10 @@ class _clientesState extends State<clientes> {
             children: [
               TextFormField(
                 decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.add_box, color:  Color.fromARGB(255, 100, 231, 104),),
-                  hintText: "Nombre producto",
+                  prefixIcon: Icon(Icons.person, color:  Color.fromARGB(255, 100, 231, 104),),
+                  hintText: "Nombre de usuario",
                   border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                  labelText: 'Digite el nombre del producto',
+                  labelText: 'Digitar Usuario',
                   labelStyle: TextStyle(color: Colors.grey, fontSize: 15,fontFamily: AutofillHints.username)
                 ),
               ),
@@ -39,19 +37,19 @@ class _clientesState extends State<clientes> {
               TextFormField(
                 obscureText: true,
                 decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.numbers_sharp, color:  Color.fromARGB(255, 100, 231, 104),),
-                  suffixIcon: Icon(Icons.numbers, color:  Color.fromARGB(255, 100, 231, 104),),
-                  hintText: "Cantidad",
+                  prefixIcon: Icon(Icons.password_outlined, color:  Color.fromARGB(255, 100, 231, 104),),
+                  suffixIcon: Icon(Icons.password_rounded, color:  Color.fromARGB(255, 100, 231, 104),),
+                  hintText: "Contraseña",
                   border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                  labelText: 'Digitar cantidad',
+                  labelText: 'Digitar contraseña',
                   labelStyle: TextStyle(color: Colors.grey, fontSize: 15,fontFamily: AutofillHints.password)
                 ),
               ),
               const SizedBox(height: 30,),
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.green,),
-                onPressed: add,
-                 icon: const Icon(Icons.add), label: const Text('Agregar', selectionColor: Colors.white,),)
+                onPressed: acceder,
+                 icon: const Icon(Icons.login_rounded), label: const Text('Acceder', selectionColor: Colors.white,),)
             ],
           ),
         ),
