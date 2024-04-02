@@ -45,10 +45,12 @@ class Cliente {
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body)['msg'] as List;
       return data.map((client) => Cliente.fromJson(client)).toList();
+      
     } else {
       throw Exception('Failed to fetch clientes: ${response.statusCode}');
     }
   }
+
 }
 
 class _ClienteScreenState extends State<ClienteScreen> {
@@ -64,8 +66,11 @@ class _ClienteScreenState extends State<ClienteScreen> {
     }
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lista de Clientes'),
@@ -159,4 +164,5 @@ class _ClienteScreenState extends State<ClienteScreen> {
       ),
     );
   }
+  
 }

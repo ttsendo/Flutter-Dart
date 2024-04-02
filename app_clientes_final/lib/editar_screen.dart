@@ -1,8 +1,9 @@
-
 import 'dart:convert';
 
+import 'package:app_clientes_final/sebas_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
 class EditarClienteScreen extends StatefulWidget {
   final String id;
   final String nombre;
@@ -10,6 +11,7 @@ class EditarClienteScreen extends StatefulWidget {
   final String email;
   final int telefono;
   final String password;
+  
 
   const EditarClienteScreen({
     super.key,
@@ -19,6 +21,7 @@ class EditarClienteScreen extends StatefulWidget {
     required this.email,
     required this.telefono,
     required this.password,
+    
   });
   @override
   State<EditarClienteScreen> createState() => _EditarClienteScreenState();
@@ -30,21 +33,19 @@ class _EditarClienteScreenState extends State<EditarClienteScreen> {
   final _emailController = TextEditingController();
   final _telefonoController = TextEditingController();
   final _passwordController = TextEditingController();
-  void updateCliente(Map<String, dynamic> cliente, String id) async {
+  Future<bool> updateCliente(Map<String, dynamic> cliente, String id) async {
     final response = await http.put(
       Uri.parse('https://backendapiclientesv2.onrender.com/cliente/?id=$id'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(cliente),
     );
     if (response.statusCode == 200) {
-      // Refresh the list of clientes
-      setState(() {});
-      //Regresamos a la pantalla anterior
-
+      return true;
     } else {
       throw Exception('Failed to update cliente: ${response.statusCode}');
     }
   }
+
   @override
   void initState() {
     super.initState();
@@ -67,38 +68,54 @@ class _EditarClienteScreenState extends State<EditarClienteScreen> {
           children: [
             TextFormField(
               controller: _nombreController,
-              decoration: InputDecoration(labelText: 'Nombre', hintText: widget.nombre),
+              decoration:
+                  InputDecoration(labelText: 'Nombre', hintText: widget.nombre),
             ),
             TextFormField(
               controller: _apellidoController,
-              decoration: InputDecoration(labelText: 'Apellido', hintText: widget.apellido),
+              decoration: InputDecoration(
+                  labelText: 'Apellido', hintText: widget.apellido),
             ),
             TextFormField(
               controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email', hintText: widget.email),
+              decoration:
+                  InputDecoration(labelText: 'Email', hintText: widget.email),
             ),
             TextFormField(
               controller: _telefonoController,
-              decoration: InputDecoration(labelText: 'Teléfono' , hintText: widget.telefono.toString()),
+              decoration: InputDecoration(
+                  labelText: 'Teléfono', hintText: widget.telefono.toString()),
             ),
             TextFormField(
               controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Contraseña', hintText: widget.password),
+              decoration: InputDecoration(
+                  labelText: 'Contraseña', hintText: widget.password),
             ),
             ElevatedButton(
               //Parseamos el telefono a entero
-              onPressed: () {
+              onPressed: () async {
                 var id = widget.id;
                 var telefono = int.parse(_telefonoController.text);
                 var cliente = {
                   'nombre': _nombreController.text,
                   'apellido': _apellidoController.text,
                   'email': _emailController.text,
-                  'telefono':telefono,
+                  'telefono': telefono,
                   'password': _passwordController.text,
                 };
-                updateCliente(cliente, id
-                );
+
+                bool success = await updateCliente(cliente, id);
+
+                if (success) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('Cliente actualizado exitosamente')));
+                  // Llamar al método de actualización de la lista
+                  Navigator.pop(context,
+                      true); // Notificar que la actualización fue exitosa
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('Error al actualizar cliente')));
+                }
               },
               child: const Text('Guardar'),
             ),

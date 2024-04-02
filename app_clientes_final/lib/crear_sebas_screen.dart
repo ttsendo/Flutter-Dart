@@ -25,13 +25,36 @@ class _CrearClienteState extends State<CrearCliente> {
       body: jsonEncode(cliente),
     );
 
+
+
+
     if (response.statusCode == 200) {
+        setState(() {});
 
     } else {
       print(response.statusCode); 
       throw Exception('Failed to register cliente: ${response.statusCode}');
     }
   }
+  bool _idVacio = false;
+bool _nombreVacio = false;
+bool _apellidoVacio = false;
+bool _emailVacio = false;
+bool _telefonoVacio = false;
+bool _passwordVacio = false;
+
+
+    bool validarCampos() {
+  _idVacio = _idController.text.isEmpty;
+  _nombreVacio = _nombreController.text.isEmpty;
+  _apellidoVacio = _apellidoController.text.isEmpty;
+  _emailVacio = _emailController.text.isEmpty;
+  _telefonoVacio = _telefonoController.text.isEmpty;
+  _passwordVacio = _passwordController.text.isEmpty;
+
+  return !_idVacio && !_nombreVacio && !_apellidoVacio && !_emailVacio && !_telefonoVacio && !_passwordVacio;
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -69,22 +92,38 @@ class _CrearClienteState extends State<CrearCliente> {
               decoration: const InputDecoration(labelText: 'Contraseña'),
             ),
             ElevatedButton(
-              onPressed: () async {
-                var telefono = int.parse(_telefonoController.text);
-                var cliente = {
-                  'id': _idController.text,
-                  'nombre': _nombreController.text,
-                  'apellido': _apellidoController.text,
-                  'email': _emailController.text,
-                  'telefono': telefono,
-                  'password': _passwordController.text,
-                };
-                 registrarCliente(cliente);
-                //Redirigimos al listar
-                MaterialPageRoute(builder: (context) => const ClienteScreen());
-              },
-              child: const Text('Registrar'),
-            ),
+  onPressed: () async {
+    if (validarCampos()) {
+      var telefono = int.tryParse(_telefonoController.text);
+      if (telefono != null) {
+        var cliente = {
+          'id': _idController.text,
+          'nombre': _nombreController.text,
+          'apellido': _apellidoController.text,
+          'email': _emailController.text,
+          'telefono': telefono,
+          'password': _passwordController.text,
+        };
+        registrarCliente(cliente);
+
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => const ClienteScreen(),
+          ),
+          (Route<dynamic> route) => false,
+        );
+      } else {
+        // Manejar error de conversión del teléfono a entero
+        print('Ingrese un número válido para teléfono');
+      }
+    } else {
+      // Manejar el caso en el que algún campo esté vacío
+      print('Por favor complete todos los campos');
+    }
+  },
+  child: const Text('Registrar'),
+),
+
           ],
         ),
       ),

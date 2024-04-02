@@ -14,20 +14,21 @@ class DetalleClienteScreen extends StatefulWidget {
     required this.apellido,
     required this.email,
     required this.telefono,
-    required this.password, required String id,
+    required this.password,
+    required String id,
   });
   @override
   State<DetalleClienteScreen> createState() => _DetalleClienteScreenState();
 }
 
 class _DetalleClienteScreenState extends State<DetalleClienteScreen> {
-    final _nombreController = TextEditingController();
+  final _nombreController = TextEditingController();
   final _apellidoController = TextEditingController();
   final _emailController = TextEditingController();
   final _telefonoController = TextEditingController();
   final _passwordController = TextEditingController();
 
-    void updateCliente() async {
+  void updateCliente() async {
     final response = await http.put(
       Uri.parse('https://backendapiclientesv2.onrender.com/cliente'),
       body: {
@@ -45,6 +46,7 @@ class _DetalleClienteScreenState extends State<DetalleClienteScreen> {
       throw Exception('Failed to update cliente: ${response.statusCode}');
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,11 +59,15 @@ class _DetalleClienteScreenState extends State<DetalleClienteScreen> {
           children: [
             TextFormField(
               initialValue: widget.nombre,
-              decoration: InputDecoration(labelText: 'Nombre', hintText: widget.nombre, ),
+              decoration: InputDecoration(
+                labelText: 'Nombre',
+                hintText: widget.nombre,
+              ),
             ),
             TextFormField(
               initialValue: widget.apellido,
-              decoration: InputDecoration(labelText: 'Apellido', hintText: widget.apellido),
+              decoration: InputDecoration(
+                  labelText: 'Apellido', hintText: widget.apellido),
             ),
             TextFormField(
               initialValue: widget.email,
@@ -69,16 +75,23 @@ class _DetalleClienteScreenState extends State<DetalleClienteScreen> {
             ),
             TextFormField(
               initialValue: widget.telefono.toString(),
-              decoration: InputDecoration(labelText: 'Teléfono' , hintText: widget.telefono.toString()),
+              decoration: InputDecoration(
+                  labelText: 'Teléfono', hintText: widget.telefono.toString()),
             ),
             TextFormField(
               initialValue: widget.password,
-              decoration: InputDecoration(labelText: 'Contraseña', hintText: widget.password),
+              decoration: InputDecoration(
+                  labelText: 'Contraseña', hintText: widget.password),
             ),
             ElevatedButton(
               onPressed: () {
-                // Enviar los cambios y actualizar el cliente
-                MaterialPageRoute(builder: (context) => const ClienteScreen());
+                updateCliente(); // Llamar a la función para actualizar los datos del cliente
+
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                      builder: (context) => const ClienteScreen()),
+                  (Route<dynamic> route) => false,
+                );
               },
               child: const Text('Cerrar'),
             ),
