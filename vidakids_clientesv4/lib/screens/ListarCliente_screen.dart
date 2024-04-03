@@ -31,7 +31,7 @@ class Cliente {
       apellido: json['apellido'],
       email: json['email'],
       telefono: json['telefono'],
-      ciudad: json['ciudad'] ?? '',
+      ciudad: json['ciudad'] ?? '' ,
       password: json['password'],
     );
   }

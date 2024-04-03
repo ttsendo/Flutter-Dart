@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:vidakids_clientesv4/screens/detalleVenta_screen.dart';
 import 'package:vidakids_clientesv4/screens/EditarVenta_screen.dart';
 import 'dart:convert';
-import 'package:vidakids_clientesv4/screens/AgregarVenta_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Venta {
